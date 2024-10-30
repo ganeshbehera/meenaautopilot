@@ -6,7 +6,6 @@ const jwt = require('jsonwebtoken');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
-const rateLimit = require('express-rate-limit');
 const morgan = require('morgan');
 const cron = require('node-cron');
 
@@ -20,7 +19,7 @@ if (!process.env.MONGO_URI || !process.env.ACCESS_TOKEN_SECRET) {
 const app = express();
 
 // Set 'trust proxy' to 1 to properly handle proxy headers from Vercel
-app.set('trust proxy', 1); // <-- Modified this line
+app.set('trust proxy', 1); // <-- Keep this setting for proxy configuration
 
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URI, {
@@ -33,13 +32,6 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 db.once('open', () => {
   console.log('Connected to MongoDB');
 });
-
-// Rate limiter middleware
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // Limit each IP to 100 requests per windowMs
-});
-app.use(limiter);
 
 // Security middleware
 app.use(helmet()); // Adds various security headers to the response

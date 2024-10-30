@@ -19,6 +19,9 @@ if (!process.env.MONGO_URI || !process.env.ACCESS_TOKEN_SECRET) {
 
 const app = express();
 
+// Set 'trust proxy' to true to properly handle proxy headers
+app.set('trust proxy', true); // <-- Add this line
+
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,

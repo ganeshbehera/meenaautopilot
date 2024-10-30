@@ -72,7 +72,8 @@ const faqRoutes = require('./routes/faqRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const backtestRoutes = require('./routes/backtestRoutes');
 const authRoutes = require('./routes/authRoutes'); // Added auth routes for user authentication
-const profileRoutes = require('./routes/profileRoutes'); // Added profile routes for user profile management
+const profileRoutes = require('./routes/profileRoutes');
+const positionRoutes = require('./routes/positionsRoutes'); // Added profile routes for user profile management
 
 // Use route modules
 app.use('/api/v1/accounts', authenticateToken, accountRoutes);
@@ -80,7 +81,9 @@ app.use('/api/v1/faqs', authenticateToken, faqRoutes);
 app.use('/api/v1/admin', authenticateToken, authorizeAdmin, adminRoutes);
 app.use('/api/v1/backtest', authenticateToken, backtestRoutes);
 app.use('/api/v1/auth', authRoutes); // Authentication routes for sign-up, sign-in, reset password
-app.use('/api/v1/profile', authenticateToken, profileRoutes); // User profile management routes
+app.use('/api/v1/profile', authenticateToken, profileRoutes); 
+app.use('/api/v1/auth', authRoutes); 
+app.use('/api/v1/positions', authenticateToken, positionRoutes); // User profile management routes
 
 // General error-handling middleware
 app.use((err, req, res, next) => {
